@@ -10,6 +10,7 @@ import android.support.v7.graphics.drawable.DrawerArrowDrawable
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
+import com.jaeger.library.StatusBarUtil
 import com.jude.swipbackhelper.SwipeBackHelper
 import com.magiclon.huatuodrug.R
 import com.magiclon.huatuodrug.adapter.MainAdapter
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        StatusBarUtil.setColor(this,resources.getColor(R.color.colorPrimary),0)
         initView()
         initEvents()
         initData()
