@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/custom"
+    tools:context="com.magiclon.huatuodrug.activity.DiseaseDetailActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_disedetail_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:padding="15dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/back" />
+
+            <TextView
+                android:id="@+id/tv_disedetail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="疾病名称"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/line" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        app:srlEnablePureScrollMode="true">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/tv_disedetail_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:text="asdasd"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/topscroll"
+                    android:gravity="center"
+                    android:text="主药"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/tv_disedetail_miandrug"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:text="主药"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/topscroll"
+                    android:gravity="center"
+                    android:text="辅药"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/tv_disedetail_assistdrug"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:text="辅药"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/topscroll"
+                    android:gravity="center"
+                    android:text="营养素"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/tv_disedetail_nutrition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:text="营养素"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/topscroll"
+                    android:gravity="center"
+                    android:text="茶饮"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/tv_disedetail_tea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:text="茶饮"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/topscroll"
+                    android:gravity="center"
+                    android:text="外用/医疗器械"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="1dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/tv_disedetail_mathine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:text="外用/医疗器械"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</RelativeLayout>

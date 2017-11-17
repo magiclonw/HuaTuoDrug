@@ -1,0 +1,107 @@
+import java.text.SimpleDateFormat
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'AndResGuard'
+android {
+    signingConfigs {
+        config {
+            keyAlias '123456'
+            keyPassword '123456'
+            storeFile file('E:/keystore/huatuo.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId "com.magiclon.huatuodrug"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.jaeger.statusbarutil:library:1.4.0'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    compile 'com.orhanobut:logger:2.1.1'
+    compile 'com.github.MagicLonW:floridftoast:1.0.0'
+    compile 'com.jude:swipebackhelper:3.1.2'
+    compile 'com.android.support:cardview-v7:26.1.0'
+    testCompile 'junit:junit:4.12'
+}
+repositories {
+    mavenCentral()
+    google()
+}
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.8-RC1'
+    }
+}
+
+andResGuard {
+    // mappingFile = file("./resource_mapping.txt")
+    mappingFile = null
+    // It will be invalid when you sign apk with schemeV2
+    use7zip = true
+    useSign = true
+    // it will keep the origin path of your resources when it's true
+    keepRoot = false
+
+    whiteList = [
+            // your icon
+            "R.mipmap.ic_launcher",
+            "R.mipmap.ic_launcher_round"
+
+    ]
+    compressFilePattern = [
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+            "resources.arsc"
+    ]
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.2.8-RC1'
+        //path = "/usr/local/bin/7za"
+    }
+
+    /**
+     * Optional: if finalApkBackupPath is null, AndResGuard will overwrite final apk
+     * to the path which assemble[Task] write to
+     **/
+    SimpleDateFormat sdf_convert = new SimpleDateFormat("yyyyMMddHHmmss")
+    finalApkBackupPath = "${project.rootDir}/HT${sdf_convert.format(new Date())}.apk"
+
+    /**
+     * Optional: Specifies the name of the message digest algorithm to user when digesting the entries of JAR file
+     * Only works in V1signing, default value is "SHA1"
+     **/
+    digestalg = "SHA256"
+}
