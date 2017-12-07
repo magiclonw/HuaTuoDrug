@@ -1,5 +1,6 @@
 package com.magiclon.huatuodrug.activity
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -39,14 +40,14 @@ class TermsActivity : BaseActivity(), View.OnClickListener {
         adapter = TermsAdapter(list, this, type)
         rv_terms.layoutManager = LinearLayoutManager(this)
         rv_terms.adapter = adapter
-        adapter?.setOnItemClickListener { _, position ->
-            startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type))
+        adapter?.setOnItemClickListener { view, position ->
+            startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type), ActivityOptions.makeSceneTransitionAnimation(this, view, "sharedviewtitle").toBundle())
         }
     }
 
     override fun onClick(p0: View?) {
         when (p0) {
-            iv_terms_back -> finish()
+            iv_terms_back -> super.onBackPressed()
             iv_terms_search -> startActivity(Intent(this@TermsActivity, TermsSearchActivity::class.java).putExtra("type", type))
         }
     }

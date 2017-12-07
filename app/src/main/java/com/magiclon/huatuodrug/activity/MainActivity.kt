@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.graphics.drawable.DrawerArrowDrawable
@@ -18,6 +20,7 @@ import com.magiclon.huatuodrug.util.StatusBarUtil
 import com.magiclon.individuationtoast.ToastUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawlayout_left.*
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -55,8 +58,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         adapter = MainAdapter(list, this)
         rv_main.layoutManager = LinearLayoutManager(this)
         rv_main.adapter = adapter
-        adapter?.setOnItemClickListener { _, position ->
-            startActivity(Intent(this@MainActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id))
+        adapter?.setOnItemClickListener { view1, view2,position ->
+            var  first =  android.support.v4.util.Pair<View, String>(view1, ViewCompat.getTransitionName(view1))
+            var  second =  android.support.v4.util.Pair<View, String>(view2, ViewCompat.getTransitionName(view2))
+            val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity, first,second)
+            startActivity(Intent(this@MainActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id), transitionActivityOptions.toBundle())
         }
     }
 

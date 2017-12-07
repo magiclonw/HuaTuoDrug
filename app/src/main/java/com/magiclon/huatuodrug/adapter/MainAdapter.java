@@ -34,7 +34,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     //define interface
     public interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view1,View view2, int position);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnItemClickListener.onItemClick(view, vh.getLayoutPosition());
+                mOnItemClickListener.onItemClick(vh.tv_title,vh.tv_content, vh.getLayoutPosition());
             }
         });
         return vh;

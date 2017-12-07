@@ -2,6 +2,8 @@ package com.magiclon.huatuodrug.activity
 
 import android.content.Context
 import android.content.Intent
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -87,8 +89,11 @@ class SearchActivity : BaseActivity(), View.OnClickListener {
         adapter = MainAdapter(list, this)
         rv_search.layoutManager = LinearLayoutManager(this)
         rv_search.adapter = adapter
-        adapter?.setOnItemClickListener { _, position ->
-            startActivity(Intent(this@SearchActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id))
+        adapter?.setOnItemClickListener { view1,view2, position ->
+            var  first =  android.support.v4.util.Pair<View, String>(view1, ViewCompat.getTransitionName(view1))
+            var  second =  android.support.v4.util.Pair<View, String>(view2, ViewCompat.getTransitionName(view2))
+            val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this@SearchActivity, first,second)
+            startActivity(Intent(this@SearchActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id), transitionActivityOptions.toBundle())
         }
 
     }

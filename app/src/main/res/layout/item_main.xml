@@ -14,7 +14,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/touch_bg">
+        android:background="@drawable/touch_bg"
+        >
 
         <ImageView
             android:id="@+id/iv_itemmain_pic"
@@ -39,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="123"
                 android:textColor="@color/maincolordark"
+                android:transitionName="sharedViewtitle"
                 android:textSize="16sp" />
 
             <TextView
@@ -48,6 +50,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="123"
+                android:transitionName="sharedViewcontent"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>

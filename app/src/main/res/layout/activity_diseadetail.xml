@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="疾病名称"
+                android:transitionName="sharedViewtitle"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -79,6 +80,7 @@
                         android:background="@color/white"
                         android:padding="10dp"
                         android:text="asdasd"
+                        android:transitionName="sharedViewcontent"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
                 </android.support.v7.widget.CardView>

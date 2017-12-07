@@ -47,7 +47,7 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.ViewHolder> 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnItemClickListener.onItemClick(view, vh.getLayoutPosition());
+                mOnItemClickListener.onItemClick(vh.tv_title, vh.getLayoutPosition());
             }
         });
         return vh;

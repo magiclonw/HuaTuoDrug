@@ -46,7 +46,7 @@ class TermsDetailActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when(p0?.id){
-            R.id.iv_termsdetail_back->finish()
+            R.id.iv_termsdetail_back->super.onBackPressed()
         }
     }
 }
