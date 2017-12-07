@@ -1,12 +1,11 @@
 package com.magiclon.huatuodrug.activity
 
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-
-import com.jaeger.library.StatusBarUtil
 import com.magiclon.huatuodrug.R
+import com.magiclon.huatuodrug.util.StatusBarUtil
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 

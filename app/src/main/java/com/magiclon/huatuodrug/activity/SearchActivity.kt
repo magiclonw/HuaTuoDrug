@@ -7,12 +7,12 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import com.jaeger.library.StatusBarUtil
 import com.magiclon.huatuodrug.R
 import com.magiclon.huatuodrug.adapter.HistoryAdapter
 import com.magiclon.huatuodrug.adapter.MainAdapter
 import com.magiclon.huatuodrug.db.DBManager
 import com.magiclon.huatuodrug.model.CommonDrugBean
+import com.magiclon.huatuodrug.util.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_search.*
 import java.util.*
 

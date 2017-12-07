@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.jaeger.library.StatusBarUtil
 import com.magiclon.huatuodrug.R
 import com.magiclon.huatuodrug.adapter.TermsAdapter
 import com.magiclon.huatuodrug.db.DBManager
 import com.magiclon.huatuodrug.model.TermsBean
+import com.magiclon.huatuodrug.util.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_terms.*
 
 class TermsActivity : BaseActivity(), View.OnClickListener {
@@ -17,7 +17,7 @@ class TermsActivity : BaseActivity(), View.OnClickListener {
     var type = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        StatusBarUtil.setColorForSwipeBack(this, resources.getColor(R.color.white), 60)
+        StatusBarUtil.darkMode(this)
     }
 
     override fun initView() {

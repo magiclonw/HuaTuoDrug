@@ -44,7 +44,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.jaeger.statusbarutil:library:1.4.0'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'com.orhanobut:logger:2.1.1'
     compile 'com.github.MagicLonW:floridftoast:1.0.0'

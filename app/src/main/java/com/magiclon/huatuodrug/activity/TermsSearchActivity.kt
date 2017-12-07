@@ -1,18 +1,17 @@
 package com.magiclon.huatuodrug.activity
 
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import com.jaeger.library.StatusBarUtil
 import com.magiclon.huatuodrug.R
 import com.magiclon.huatuodrug.adapter.HistoryAdapter
 import com.magiclon.huatuodrug.adapter.TermsDetailAdapter
 import com.magiclon.huatuodrug.db.DBManager
 import com.magiclon.huatuodrug.model.TermsBean
+import com.magiclon.huatuodrug.util.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_termsearch.*
 import java.util.*
 
@@ -26,7 +25,7 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
 
     override fun initView() {
         setContentView(R.layout.activity_termsearch)
-        StatusBarUtil.setColorForSwipeBack(this, resources.getColor(R.color.white), 60)
+        StatusBarUtil.darkMode(this)
         dbManager = DBManager.getInstance(this)
         type=intent.extras.getString("type")
     }
