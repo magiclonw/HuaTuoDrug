@@ -3,6 +3,7 @@ package com.magiclon.huatuodrug.activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.ViewCompat
@@ -62,7 +63,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             var  first =  android.support.v4.util.Pair<View, String>(view1, ViewCompat.getTransitionName(view1))
             var  second =  android.support.v4.util.Pair<View, String>(view2, ViewCompat.getTransitionName(view2))
             val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity, first,second)
-            startActivity(Intent(this@MainActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id), transitionActivityOptions.toBundle())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                startActivity(Intent(this@MainActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id), transitionActivityOptions.toBundle())
+            }else{
+                startActivity(Intent(this@MainActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id))
+            }
         }
     }
 

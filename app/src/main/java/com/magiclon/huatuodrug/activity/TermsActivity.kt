@@ -2,6 +2,7 @@ package com.magiclon.huatuodrug.activity
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -41,7 +42,11 @@ class TermsActivity : BaseActivity(), View.OnClickListener {
         rv_terms.layoutManager = LinearLayoutManager(this)
         rv_terms.adapter = adapter
         adapter?.setOnItemClickListener { view, position ->
-            startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type), ActivityOptions.makeSceneTransitionAnimation(this, view, "sharedviewtitle").toBundle())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type), ActivityOptions.makeSceneTransitionAnimation(this, view, "sharedviewtitle").toBundle())
+            }else{
+                startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type))
+            }
         }
     }
 
