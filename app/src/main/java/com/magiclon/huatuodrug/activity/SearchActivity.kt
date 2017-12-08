@@ -26,6 +26,7 @@ class SearchActivity : BaseActivity(), View.OnClickListener {
     private var list = ArrayList<CommonDrugBean>()
     private var adapter: MainAdapter? = null
 
+    @Suppress("DEPRECATION")
     override fun initView() {
         setContentView(R.layout.activity_search)
         dbManager = DBManager.getInstance(this)
@@ -34,7 +35,7 @@ class SearchActivity : BaseActivity(), View.OnClickListener {
 
     override fun initEvents() {
         iv_search_back.setOnClickListener(this)
-        edt_search.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
+        edt_search.setOnEditorActionListener(TextView.OnEditorActionListener { _, i, _ ->
             if (i == EditorInfo.IME_ACTION_SEARCH || i == EditorInfo.IME_ACTION_UNSPECIFIED || i == EditorInfo.IME_ACTION_GO) {
                 (this@SearchActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
                         .hideSoftInputFromWindow(currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
@@ -56,7 +57,7 @@ class SearchActivity : BaseActivity(), View.OnClickListener {
         hadapter = HistoryAdapter(hlist, this)
         rv_history.layoutManager = LinearLayoutManager(this)
         rv_history.adapter = hadapter
-        hadapter?.setOnItemClickListener { view, position ->
+        hadapter?.setOnItemClickListener { _, position ->
             (this@SearchActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
                     .hideSoftInputFromWindow(currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             submit(hlist[position])

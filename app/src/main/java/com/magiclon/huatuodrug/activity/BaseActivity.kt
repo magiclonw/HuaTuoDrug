@@ -11,7 +11,7 @@ import com.jude.swipbackhelper.SwipeBackHelper
  * 邮箱：1348149485@qq.com
  * 描述：
  */
-open abstract class BaseActivity : AppCompatActivity() {
+ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

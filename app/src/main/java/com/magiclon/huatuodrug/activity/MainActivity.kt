@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var dbmanager: DBManager? = null
     private var adapter: MainAdapter? = null
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         initData()
     }
 
+    @Suppress("DEPRECATION")
     private fun initView() {
         val toggle = ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -107,6 +109,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun getResources(): Resources {//保障字体在系统字体改变时，app的字体不会改变
         val res = super.getResources()
         val config = Configuration()
