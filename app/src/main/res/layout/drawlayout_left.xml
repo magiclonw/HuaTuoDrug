@@ -45,9 +45,11 @@
             android:src="@mipmap/terms" />
 
         <TextView
+            android:id="@+id/tv_main_terms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="谈话术语"
+            android:transitionName="sharedviewterms"
             android:textColor="@color/gray"
             android:textSize="16sp" />
     </LinearLayout>
@@ -76,9 +78,11 @@
             android:src="@mipmap/drug" />
 
         <TextView
+            android:id="@+id/tv_main_drugalis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="药物别名"
+            android:transitionName="sharedviewterms"
             android:textColor="@color/gray"
             android:textSize="16sp" />
     </LinearLayout>

@@ -1,5 +1,6 @@
 package com.magiclon.huatuodrug.activity
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        StatusBarUtil.setColor(this,resources.getColor(R.color.colorPrimary),0)
+        StatusBarUtil.setColor(this, resources.getColor(R.color.colorPrimary), 0)
         initView()
         initEvents()
         initData()
@@ -59,13 +60,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         adapter = MainAdapter(list, this)
         rv_main.layoutManager = LinearLayoutManager(this)
         rv_main.adapter = adapter
-        adapter?.setOnItemClickListener { view1, view2,position ->
-            var  first =  android.support.v4.util.Pair<View, String>(view1, ViewCompat.getTransitionName(view1))
-            var  second =  android.support.v4.util.Pair<View, String>(view2, ViewCompat.getTransitionName(view2))
-            val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity, first,second)
+        adapter?.setOnItemClickListener { view1, view2, position ->
+            var first = android.support.v4.util.Pair<View, String>(view1, ViewCompat.getTransitionName(view1))
+            var second = android.support.v4.util.Pair<View, String>(view2, ViewCompat.getTransitionName(view2))
+            val transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity, first, second)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 startActivity(Intent(this@MainActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id), transitionActivityOptions.toBundle())
-            }else{
+            } else {
                 startActivity(Intent(this@MainActivity, DiseaseDetailActivity::class.java).putExtra("id", list[position].id))
             }
         }
@@ -74,8 +75,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.ll_main_search -> startActivity(Intent(this@MainActivity, SearchActivity::class.java))
-            R.id.ll_main_terms -> startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type","1"))
-            R.id.ll_main_drugalis ->startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type","2"))
+            R.id.ll_main_terms -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "1"), ActivityOptions.makeSceneTransitionAnimation(this, tv_main_terms, "sharedviewterms").toBundle())
+                } else {
+                    startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "1"))
+                }
+            }
+            R.id.ll_main_drugalis -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "2"), ActivityOptions.makeSceneTransitionAnimation(this, tv_main_drugalis, "sharedviewterms").toBundle())
+                } else {
+                    startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "2"))
+                }
+            }
         }
     }
 
