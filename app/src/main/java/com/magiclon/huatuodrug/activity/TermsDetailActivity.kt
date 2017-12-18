@@ -2,11 +2,13 @@ package com.magiclon.huatuodrug.activity
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.magiclon.huatuodrug.R
 import com.magiclon.huatuodrug.adapter.TermsDetailAdapter
 import com.magiclon.huatuodrug.db.DBManager
 import com.magiclon.huatuodrug.model.TermsBean
+import com.magiclon.huatuodrug.util.AmapTTSController
 import com.magiclon.huatuodrug.util.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_termsdetail.*
 
@@ -16,6 +18,7 @@ class TermsDetailActivity : BaseActivity(), View.OnClickListener {
     private var pid=""
     private var pname=""
     var type=""
+    private var amapTTSController: AmapTTSController? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusBarUtil.darkMode(this)
@@ -24,6 +27,8 @@ class TermsDetailActivity : BaseActivity(), View.OnClickListener {
     override fun initView() {
         setContentView(R.layout.activity_termsdetail)
         type=intent.extras.getString("type")
+        amapTTSController = AmapTTSController.getInstance(applicationContext)
+        amapTTSController?.init()
     }
 
     override fun initEvents() {
@@ -45,8 +50,9 @@ class TermsDetailActivity : BaseActivity(), View.OnClickListener {
         adapter = TermsDetailAdapter(list, this,false)
         rv_termsdetail.layoutManager = LinearLayoutManager(this)
         rv_termsdetail.adapter = adapter
-        adapter?.setOnItemClickListener { _, _ ->
-
+        adapter?.setOnItemClickListener { _, postion ->
+            amapTTSController?.stopSpeaking()
+            amapTTSController?.onGetNavigationText(list[postion].content)
         }
         tv_termsdetail_title.text=pname
     }
@@ -55,5 +61,10 @@ class TermsDetailActivity : BaseActivity(), View.OnClickListener {
         when(p0?.id){
             R.id.iv_termsdetail_back->super.onBackPressed()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        amapTTSController?.destroy()
     }
 }
