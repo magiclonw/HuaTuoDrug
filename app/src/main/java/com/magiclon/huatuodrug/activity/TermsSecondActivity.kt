@@ -13,6 +13,9 @@ import com.magiclon.huatuodrug.model.TermsBean
 import com.magiclon.huatuodrug.util.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_terms.*
 
+/**
+ * 二级页面
+ */
 class TermsSecondActivity : BaseActivity(), View.OnClickListener {
     private var dbmanager: DBManager? = null
     private var adapter: TermsAdapter? = null
