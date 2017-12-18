@@ -2,6 +2,9 @@ package com.magiclon.huatuodrug.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,8 @@ import com.magiclon.huatuodrug.R;
 import com.magiclon.huatuodrug.model.TermsBean;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 作者：MagicLon
@@ -19,11 +24,13 @@ import java.util.List;
  * 描述：
  */
 public class TermsDetailAdapter extends RecyclerView.Adapter<TermsDetailAdapter.ViewHolder> {
-    private final List<TermsBean> mList;
+    private List<TermsBean> mList;
+    private boolean type = true;
 
-    public TermsDetailAdapter(List<TermsBean> list, Context context) {
+    public TermsDetailAdapter(List<TermsBean> list, Context context,boolean type) {
         Context mContext = context;
         this.mList = list;
+        this.type=type;
     }
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
@@ -52,7 +59,12 @@ public class TermsDetailAdapter extends RecyclerView.Adapter<TermsDetailAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.tv_title.setText((position+1)+"、"+mList.get(position).getContent());
+        if(!type){
+            holder.tv_title.setText( mList.get(position).getContent());
+        }else {
+            holder.tv_title.setText((position + 1) + "、" + mList.get(position).getContent());
+        }
+
     }
 
     @Override

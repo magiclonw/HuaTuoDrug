@@ -58,6 +58,8 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.ViewHolder> 
         holder.tv_title.setText(mList.get(position).getPname());
         if(type.equals("2")){
             holder.iv_terms_pic.setImageResource(R.mipmap.drug_green);
+        }else if(type.equals("3")){
+            holder.iv_terms_pic.setImageResource(R.mipmap.subject_green);
         }
     }
 

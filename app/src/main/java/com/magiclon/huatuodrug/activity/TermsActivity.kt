@@ -35,6 +35,8 @@ class TermsActivity : BaseActivity(), View.OnClickListener {
     override fun initData() {
         if (type == "2") {
             tv_terms_title.text = "常用药品别名汇总"
+        } else if (type == "3") {
+            tv_terms_title.text = "专题培训"
         }
         dbmanager = DBManager.getInstance(this)
         val list: MutableList<TermsBean> = dbmanager?.getAllTerms(type)!!
@@ -42,10 +44,18 @@ class TermsActivity : BaseActivity(), View.OnClickListener {
         rv_terms.layoutManager = LinearLayoutManager(this)
         rv_terms.adapter = adapter
         adapter?.setOnItemClickListener { view, position ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type), ActivityOptions.makeSceneTransitionAnimation(this, view, "sharedviewtitle").toBundle())
-            }else{
-                startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type))
+            if (type == "3") {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(Intent(this@TermsActivity, TermsSecondActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type), ActivityOptions.makeSceneTransitionAnimation(this, view, "sharedviewterms").toBundle())
+                } else {
+                    startActivity(Intent(this@TermsActivity, TermsSecondActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type))
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type), ActivityOptions.makeSceneTransitionAnimation(this, view, "sharedviewtitle").toBundle())
+                } else {
+                    startActivity(Intent(this@TermsActivity, TermsDetailActivity::class.java).putExtra("pid", list[position].pid).putExtra("pname", list[position].pname).putExtra("type", type))
+                }
             }
         }
     }
@@ -53,7 +63,7 @@ class TermsActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0) {
             iv_terms_back -> super.onBackPressed()
-            iv_terms_search -> startActivity(Intent(this@TermsActivity, TermsSearchActivity::class.java).putExtra("type", type))
+            iv_terms_search -> startActivity(Intent(this@TermsActivity, TermsSearchActivity::class.java).putExtra("pid","").putExtra("type", type))
         }
     }
 }

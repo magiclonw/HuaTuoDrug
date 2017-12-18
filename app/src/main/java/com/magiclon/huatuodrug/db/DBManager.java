@@ -31,8 +31,10 @@ public class DBManager {
     private final String TABLE_NAME_HISTORY = "history";
     private final String TABLE_NAME_TERMSHISTORY = "termshistory";
     private final String TABLE_NAME_ALISHISTORY = "alishistory";
+    private final String TABLE_NAME_SUBJECTHISTORY = "subjecthistory";
     private final String TABLE_NAME_TERMS = "talkterms";
     private final String TABLE_NAME_DRUGALIS = "drugalis";
+    private final String TABLE_NAME_SUBJECT = "subject";
 
 
     private static DBManager instance = new DBManager();
@@ -97,6 +99,8 @@ public class DBManager {
         String table = TABLE_NAME_TERMS;
         if (type.equals("2")) {
             table = TABLE_NAME_DRUGALIS;
+        } else if (type.equals("3")) {
+            table = TABLE_NAME_SUBJECT;
         }
         Cursor cursor = db.rawQuery("select pid,pname from " + table + " group by pid", null);
         List<TermsBean> result = new ArrayList<>();
@@ -104,6 +108,23 @@ public class DBManager {
             String pid = cursor.getString(0);
             String pname = cursor.getString(1);
 
+            result.add(new TermsBean(pid, pname));
+        }
+        db.endTransaction();
+        cursor.close();
+        db.close();
+        return result;
+    }
+
+    public List<TermsBean> getAllSecondTerms(String type,String id) {
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+        db.beginTransaction();
+        String table = TABLE_NAME_SUBJECT;
+        Cursor cursor = db.rawQuery("select sid,sname from " + table +" where pid="+id, null);
+        List<TermsBean> result = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            String pid = cursor.getString(0);
+            String pname = cursor.getString(1);
             result.add(new TermsBean(pid, pname));
         }
         db.endTransaction();
@@ -120,6 +141,21 @@ public class DBManager {
             table = TABLE_NAME_DRUGALIS;
         }
         Cursor cursor = db.rawQuery("select content from " + table + " where pid=" + pid, null);
+        List<TermsBean> result = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            String content = cursor.getString(0);
+            result.add(new TermsBean(content));
+        }
+        db.endTransaction();
+        cursor.close();
+        db.close();
+        return result;
+    }
+    public List<TermsBean> getSomeTermsSecondDetail(String pid, String type) {
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+        db.beginTransaction();
+        String table = TABLE_NAME_SUBJECT;
+        Cursor cursor = db.rawQuery("select scontent from " + table + " where sid=" + pid, null);
         List<TermsBean> result = new ArrayList<>();
         while (cursor.moveToNext()) {
             String content = cursor.getString(0);
@@ -149,14 +185,24 @@ public class DBManager {
         return result;
     }
 
-    public List<TermsBean> getSomeTerms(String edt, String type) {
+    public List<TermsBean> getSomeTerms(String edt, String type,String pid) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
         db.beginTransaction();
-        String table = TABLE_NAME_TERMS;
-        if (type.equals("2")) {
+        Cursor cursor=null;
+        String table = "";
+        if(type.equals("1")){
+            table = TABLE_NAME_TERMS;
+            cursor = db.rawQuery("select content from " + table + " where content like '%" + edt + "%'", null);
+        }else if (type.equals("2")) {
             table = TABLE_NAME_DRUGALIS;
+            cursor = db.rawQuery("select content from " + table + " where content like '%" + edt + "%'", null);
+        }else if(type.equals("3")){
+            table = TABLE_NAME_SUBJECT;
+            cursor = db.rawQuery("select scontent from " + table + " where scontent like '%" + edt + "%'", null);
+        }else if(type.equals("second3")){
+            table = TABLE_NAME_SUBJECT;
+            cursor = db.rawQuery("select scontent from " + table + " where scontent like '%" + edt + "%' and pid="+pid, null);
         }
-        Cursor cursor = db.rawQuery("select content from " + table + " where content like '%" + edt + "%'", null);
         List<TermsBean> result = new ArrayList<>();
         while (cursor.moveToNext()) {
             String content = cursor.getString(0);
@@ -202,6 +248,10 @@ public class DBManager {
             table = TABLE_NAME_TERMSHISTORY;
         } else if (type.equals("2")) {
             table = TABLE_NAME_ALISHISTORY;
+        }else if(type.equals("3")){
+            table = TABLE_NAME_SUBJECTHISTORY;
+        }else if(type.equals("second3")){
+            table = TABLE_NAME_SUBJECTHISTORY;
         }
         Cursor cursor = db.rawQuery("select * from " + table, null);
         List<String> result = new ArrayList<>();
@@ -222,8 +272,12 @@ public class DBManager {
             table = TABLE_NAME_TERMSHISTORY;
         } else if (type.equals("2")) {
             table = TABLE_NAME_ALISHISTORY;
+        }else if(type.equals("3")){
+            table = TABLE_NAME_SUBJECTHISTORY;
+        }else if(type.equals("second3")){
+            table = TABLE_NAME_SUBJECTHISTORY;
         }
-        db.execSQL("insert into " + table + "(name) select '" + name + "' where not exists(select * from " + TABLE_NAME_HISTORY + " where name='" + name + "')");
+        db.execSQL("insert into " + table + "(name) select '" + name + "' where not exists(select * from " + table + " where name='" + name + "')");
         db.close();
     }
 
@@ -234,6 +288,10 @@ public class DBManager {
             table = TABLE_NAME_TERMSHISTORY;
         } else if (type.equals("2")) {
             table = TABLE_NAME_ALISHISTORY;
+        }else if(type.equals("3")){
+            table = TABLE_NAME_SUBJECTHISTORY;
+        }else if(type.equals("second3")){
+            table = TABLE_NAME_SUBJECTHISTORY;
         }
         db.delete(table, "name=?", new String[]{name});
         db.close();
@@ -246,6 +304,10 @@ public class DBManager {
             table = TABLE_NAME_TERMSHISTORY;
         } else if (type.equals("2")) {
             table = TABLE_NAME_ALISHISTORY;
+        }else if(type.equals("3")){
+            table = TABLE_NAME_SUBJECTHISTORY;
+        }else if(type.equals("second3")){
+            table = TABLE_NAME_SUBJECTHISTORY;
         }
         db.delete(table, null, null);
         db.close();

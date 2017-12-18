@@ -34,8 +34,15 @@ class TermsDetailActivity : BaseActivity(), View.OnClickListener {
         pid=intent.extras.getString("pid")
         pname=intent.extras.getString("pname")
         dbmanager = DBManager.getInstance(this)
-        val list: MutableList<TermsBean> = dbmanager?.getSomeTermsDetail(pid,type)!!
-        adapter = TermsDetailAdapter(list, this)
+        var list: MutableList<TermsBean> = ArrayList()
+
+        if(type=="3"){
+            list=dbmanager?.getSomeTermsSecondDetail(pid,type)!!
+        }else{
+            list= dbmanager?.getSomeTermsDetail(pid,type)!!
+        }
+
+        adapter = TermsDetailAdapter(list, this,false)
         rv_termsdetail.layoutManager = LinearLayoutManager(this)
         rv_termsdetail.adapter = adapter
         adapter?.setOnItemClickListener { _, _ ->

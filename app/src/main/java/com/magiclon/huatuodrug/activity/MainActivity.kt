@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         ll_main_search.setOnClickListener(this)
         ll_main_terms.setOnClickListener(this)
         ll_main_drugalis.setOnClickListener(this)
+        ll_main_subject.setOnClickListener(this)
     }
 
     private fun initData() {
@@ -89,6 +90,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "2"), ActivityOptions.makeSceneTransitionAnimation(this, tv_main_drugalis, "sharedviewterms").toBundle())
                 } else {
                     startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "2"))
+                }
+            }
+            R.id.ll_main_subject->{
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "3"), ActivityOptions.makeSceneTransitionAnimation(this, tv_main_subject, "sharedviewterms").toBundle())
+                } else {
+                    startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "3"))
                 }
             }
         }

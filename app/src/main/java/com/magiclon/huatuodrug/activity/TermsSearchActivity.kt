@@ -19,15 +19,16 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
     var hadapter: HistoryAdapter? = null
     var hlist = ArrayList<String>()
     var dbManager: DBManager? = null
-    var type="1"
+    var type = "1"
     private var list = ArrayList<TermsBean>()
     private var adapter: TermsDetailAdapter? = null
-
+    var pid = ""
     override fun initView() {
         setContentView(R.layout.activity_termsearch)
         StatusBarUtil.darkMode(this)
         dbManager = DBManager.getInstance(this)
-        type=intent.extras.getString("type")
+        type = intent.extras.getString("type")
+        pid = intent.extras.getString("pid")
     }
 
     override fun initEvents() {
@@ -38,7 +39,7 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
                         .hideSoftInputFromWindow(currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
                 val str_search = edt_search.text.toString().trim()
                 if (str_search != "") {
-                    dbManager?.insertHistory(edt_search.text.toString().trim(),type)
+                    dbManager?.insertHistory(edt_search.text.toString().trim(), type)
                     submit(str_search)
                 }
                 return@OnEditorActionListener true
@@ -49,8 +50,10 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
 
 
     override fun initData() {
-        if(type == "2"){
-            edt_search.hint="搜索药品、别名"
+        if (type == "2") {
+            edt_search.hint = "搜索药品、别名"
+        } else if (type == "3") {
+            edt_search.hint = "搜索药品、症状、专题"
         }
         /*----------------历史纪录----------------*/
         hlist.addAll(dbManager?.getAllHistory(type)!!)
@@ -64,7 +67,7 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
         }
         hadapter?.setOnDeleteLister(object : HistoryAdapter.OnDeleteLister {
             override fun onDeleteOne(name: String) {
-                dbManager?.deleteOneHistory(name,type)
+                dbManager?.deleteOneHistory(name, type)
                 hlist.clear()
                 hlist.addAll(dbManager?.getAllHistory(type)!!)
                 hadapter?.notifyDataSetChanged()
@@ -88,7 +91,7 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
             rv_history.visibility = View.VISIBLE
         }
         /*----------------查询的数据----------------*/
-        adapter = TermsDetailAdapter(list, this)
+        adapter = TermsDetailAdapter(list, this, true)
         rv_search.layoutManager = LinearLayoutManager(this)
         rv_search.adapter = adapter
         adapter?.setOnItemClickListener { _, _ ->
@@ -99,14 +102,19 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
 
     private fun submit(str: String) {
         list.clear()
-        list.addAll(dbManager?.getSomeTerms(str,type)!!)
+        if (type == "second3") {
+            list.addAll(dbManager?.getSomeTerms(str, type, pid)!!)
+        } else {
+            list.addAll(dbManager?.getSomeTerms(str, type, "")!!)
+        }
+
         adapter?.notifyDataSetChanged()
         rv_search.visibility = View.VISIBLE
         rv_history.visibility = View.GONE
-        if(list.size>0){
-            ll_search_empty.visibility= View.GONE
-        }else{
-            ll_search_empty.visibility= View.VISIBLE
+        if (list.size > 0) {
+            ll_search_empty.visibility = View.GONE
+        } else {
+            ll_search_empty.visibility = View.VISIBLE
         }
 
     }
