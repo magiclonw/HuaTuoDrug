@@ -11,6 +11,7 @@ import com.magiclon.huatuodrug.adapter.HistoryAdapter
 import com.magiclon.huatuodrug.adapter.TermsDetailAdapter
 import com.magiclon.huatuodrug.db.DBManager
 import com.magiclon.huatuodrug.model.TermsBean
+import com.magiclon.huatuodrug.util.AmapTTSController
 import com.magiclon.huatuodrug.util.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_termsearch.*
 import java.util.*
@@ -23,12 +24,15 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
     private var list = ArrayList<TermsBean>()
     private var adapter: TermsDetailAdapter? = null
     var pid = ""
+    private var amapTTSController: AmapTTSController? = null
     override fun initView() {
         setContentView(R.layout.activity_termsearch)
         StatusBarUtil.darkMode(this)
         dbManager = DBManager.getInstance(this)
         type = intent.extras.getString("type")
         pid = intent.extras.getString("pid")
+        amapTTSController = AmapTTSController.getInstance(applicationContext)
+        amapTTSController?.init()
     }
 
     override fun initEvents() {
@@ -91,11 +95,12 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
             rv_history.visibility = View.VISIBLE
         }
         /*----------------查询的数据----------------*/
-        adapter = TermsDetailAdapter(list, this, true)
+        adapter = TermsDetailAdapter(list, this)
         rv_search.layoutManager = LinearLayoutManager(this)
         rv_search.adapter = adapter
-        adapter?.setOnItemClickListener { _, _ ->
-
+        adapter?.setOnItemClickListener { _, postion->
+            amapTTSController?.stopSpeaking()
+            amapTTSController?.onGetNavigationText(list[postion].content)
         }
 
     }
@@ -123,6 +128,10 @@ class TermsSearchActivity : BaseActivity(), View.OnClickListener {
         when (p0?.id) {
             R.id.iv_search_back -> finish()
         }
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        amapTTSController?.destroy()
     }
 
 }

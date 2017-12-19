@@ -47,7 +47,7 @@ class TermsDetailActivity : BaseActivity(), View.OnClickListener {
             list= dbmanager?.getSomeTermsDetail(pid,type)!!
         }
 
-        adapter = TermsDetailAdapter(list, this,false)
+        adapter = TermsDetailAdapter(list, this)
         rv_termsdetail.layoutManager = LinearLayoutManager(this)
         rv_termsdetail.adapter = adapter
         adapter?.setOnItemClickListener { _, postion ->

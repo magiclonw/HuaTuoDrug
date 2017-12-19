@@ -27,7 +27,7 @@ public class TermsDetailAdapter extends RecyclerView.Adapter<TermsDetailAdapter.
     private List<TermsBean> mList;
     private boolean type = true;
 
-    public TermsDetailAdapter(List<TermsBean> list, Context context,boolean type) {
+    public TermsDetailAdapter(List<TermsBean> list, Context context) {
         Context mContext = context;
         this.mList = list;
         this.type=type;
@@ -59,12 +59,7 @@ public class TermsDetailAdapter extends RecyclerView.Adapter<TermsDetailAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        if(!type){
             holder.tv_title.setText( mList.get(position).getContent());
-        }else {
-            holder.tv_title.setText((position + 1) + "、" + mList.get(position).getContent());
-        }
-
     }
 
     @Override
