@@ -39,12 +39,10 @@ class TermsDetailActivity : BaseActivity(), View.OnClickListener {
         pid=intent.extras.getString("pid")
         pname=intent.extras.getString("pname")
         dbmanager = DBManager.getInstance(this)
-        var list: MutableList<TermsBean> = ArrayList()
-
-        if(type=="3"){
-            list=dbmanager?.getSomeTermsSecondDetail(pid,type)!!
+        var list = if(type=="3"){
+            dbmanager?.getSomeTermsSecondDetail(pid,type)!!
         }else{
-            list= dbmanager?.getSomeTermsDetail(pid,type)!!
+            dbmanager?.getSomeTermsDetail(pid,type)!!
         }
 
         adapter = TermsDetailAdapter(list, this)
