@@ -58,3 +58,4 @@
 -keep public class * extends android.app.Fragment
 
 -keep class com.iflytek.**{*;}
+-keep class com.scwang.smartrefresh.layout.SmartRefreshLayout{*;}

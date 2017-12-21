@@ -22,6 +22,13 @@ import com.magiclon.huatuodrug.util.StatusBarUtil
 import com.magiclon.individuationtoast.ToastUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawlayout_left.*
+import com.google.zxing.integration.android.IntentIntegrator
+import android.widget.Toast
+import com.google.zxing.integration.android.IntentResult
+
+
+
+
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -54,6 +61,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         ll_main_terms.setOnClickListener(this)
         ll_main_drugalis.setOnClickListener(this)
         ll_main_subject.setOnClickListener(this)
+        ll_main_kucun.setOnClickListener(this)
     }
 
     private fun initData() {
@@ -99,6 +107,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(Intent(this@MainActivity, TermsActivity::class.java).putExtra("type", "3"))
                 }
             }
+            R.id.ll_main_kucun->{
+                val integrator = IntentIntegrator(this)
+                integrator.setOrientationLocked(true)
+                integrator.initiateScan()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 

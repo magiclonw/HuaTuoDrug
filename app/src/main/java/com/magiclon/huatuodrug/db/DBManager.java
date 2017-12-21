@@ -78,7 +78,6 @@ public class DBManager {
 
     public List<CommonDrugBean> getAllCommonDrug() {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         Cursor cursor = db.rawQuery("select id,title,content from " + TABLE_NAME_COMMONDRUG, null);
         List<CommonDrugBean> result = new ArrayList<>();
         while (cursor.moveToNext()) {
@@ -87,7 +86,6 @@ public class DBManager {
             String content = cursor.getString(2);
             result.add(new CommonDrugBean(id, title, content));
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return result;
@@ -95,7 +93,6 @@ public class DBManager {
 
     public List<TermsBean> getAllTerms(String type) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         String table = TABLE_NAME_TERMS;
         if (type.equals("2")) {
             table = TABLE_NAME_DRUGALIS;
@@ -110,7 +107,6 @@ public class DBManager {
 
             result.add(new TermsBean(pid, pname));
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return result;
@@ -118,7 +114,6 @@ public class DBManager {
 
     public List<TermsBean> getAllSecondTerms(String type,String id) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         String table = TABLE_NAME_SUBJECT;
         Cursor cursor = db.rawQuery("select sid,sname from " + table +" where pid="+id, null);
         List<TermsBean> result = new ArrayList<>();
@@ -127,7 +122,6 @@ public class DBManager {
             String pname = cursor.getString(1);
             result.add(new TermsBean(pid, pname));
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return result;
@@ -135,7 +129,6 @@ public class DBManager {
 
     public List<TermsBean> getSomeTermsDetail(String pid, String type) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         String table = TABLE_NAME_TERMS;
         if (type.equals("2")) {
             table = TABLE_NAME_DRUGALIS;
@@ -146,14 +139,12 @@ public class DBManager {
             String content = cursor.getString(0);
             result.add(new TermsBean(content));
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return result;
     }
     public List<TermsBean> getSomeTermsSecondDetail(String pid, String type) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         String table = TABLE_NAME_SUBJECT;
         Cursor cursor = db.rawQuery("select scontent from " + table + " where sid=" + pid, null);
         List<TermsBean> result = new ArrayList<>();
@@ -161,7 +152,6 @@ public class DBManager {
             String content = cursor.getString(0);
             result.add(new TermsBean(content));
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return result;
@@ -169,7 +159,6 @@ public class DBManager {
 
     public List<CommonDrugBean> getSomeCommonDrug(String edt) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         String slike = " like '%" + edt + "%' or ";
         Cursor cursor = db.rawQuery("select id,title,content from " + TABLE_NAME_COMMONDRUG + " where title" + slike + "content" + slike + "maindrug" + slike + "assistdrug" + slike + "nutrition" + slike + "tea" + slike + "mathine like '%" + edt + "%'", null);
         List<CommonDrugBean> result = new ArrayList<>();
@@ -179,7 +168,6 @@ public class DBManager {
             String content = cursor.getString(2);
             result.add(new CommonDrugBean(id, title, content));
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return result;
@@ -187,7 +175,6 @@ public class DBManager {
 
     public List<TermsBean> getSomeTerms(String edt, String type,String pid) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         Cursor cursor=null;
         String table = "";
         if(type.equals("1")){
@@ -208,7 +195,6 @@ public class DBManager {
             String content = cursor.getString(0);
             result.add(new TermsBean(content));
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return result;
@@ -216,7 +202,6 @@ public class DBManager {
 
     public CommonDrugBean getDiseaseDetail(String id) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         Cursor cursor = db.rawQuery(String.format("select * from %s where id=?", TABLE_NAME_COMMONDRUG), new String[]{id});
         CommonDrugBean commonDrugBean = null;
         while (cursor.moveToNext()) {
@@ -229,7 +214,6 @@ public class DBManager {
             String mathine = cursor.getString(7);
             commonDrugBean = new CommonDrugBean(id, title, content, maindrug, assistdrug, nutrition, tea, mathine);
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return commonDrugBean;
@@ -242,7 +226,6 @@ public class DBManager {
      */
     public List<String> getAllHistory(String type) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
-        db.beginTransaction();
         String table = TABLE_NAME_HISTORY;
         if (type.equals("1")) {
             table = TABLE_NAME_TERMSHISTORY;
@@ -259,7 +242,6 @@ public class DBManager {
             String name = cursor.getString(0);
             result.add(name);
         }
-        db.endTransaction();
         cursor.close();
         db.close();
         return result;
@@ -267,6 +249,7 @@ public class DBManager {
 
     public void insertHistory(String name, String type) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+        db.beginTransaction();
         String table = TABLE_NAME_HISTORY;
         if (type.equals("1")) {
             table = TABLE_NAME_TERMSHISTORY;
@@ -278,11 +261,14 @@ public class DBManager {
             table = TABLE_NAME_SUBJECTHISTORY;
         }
         db.execSQL("insert into " + table + "(name) select '" + name + "' where not exists(select * from " + table + " where name='" + name + "')");
+       db.setTransactionSuccessful();
+       db.endTransaction();
         db.close();
     }
 
     public void deleteOneHistory(String name, String type) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+        db.beginTransaction();
         String table = TABLE_NAME_HISTORY;
         if (type.equals("1")) {
             table = TABLE_NAME_TERMSHISTORY;
@@ -294,11 +280,14 @@ public class DBManager {
             table = TABLE_NAME_SUBJECTHISTORY;
         }
         db.delete(table, "name=?", new String[]{name});
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
     }
 
     public void deleteAllHistory(String type) {
         SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DB_NAME, null);
+        db.beginTransaction();
         String table = TABLE_NAME_HISTORY;
         if (type.equals("1")) {
             table = TABLE_NAME_TERMSHISTORY;
@@ -310,6 +299,8 @@ public class DBManager {
             table = TABLE_NAME_SUBJECTHISTORY;
         }
         db.delete(table, null, null);
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
     }
 
